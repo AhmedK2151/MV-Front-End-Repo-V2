@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SearchInfo, SingleMovie } from "./fetch";
 import MovieCard from "../MovieCard/MovieCard";
-import { Stack } from "@mui/material";
+import { Grid } from "@mui/material";
 
 type ShowMovieProps = {
     searchInfo: SearchInfo
@@ -9,22 +9,29 @@ type ShowMovieProps = {
 
 export function ShowMovie(props: ShowMovieProps) {
 
-    const { searchInfo } = props
+    const { searchInfo} = props
 
     return(
-        <div style={{display: "flex", flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            { searchInfo ? (
-            searchInfo.results.map((data: SingleMovie ) => (
-                <MovieCard
-                    id={data.id}
-                    title={data.title}
-                    key={data.id}
-                    overview={data.overview}
-                    posterPath={data.poster_path}
-                    rating={data.vote_average}
-                    releaseDate={data.release_date}/>
-            ))
-            ) : (null) }
-        </div>
+        <Grid
+            container
+            spacing={2}
+            sx={{justifyContent: 'center'}}>
+            { searchInfo && (
+                searchInfo.results.map(
+                    (data: SingleMovie) => (
+                        <Grid item xs={'auto'}>
+                            <MovieCard
+                                id={data.id}
+                                title={data.title}
+                                key={data.id}
+                                overview={data.overview}
+                                posterPath={data.poster_path}
+                                rating={data.vote_average}
+                                releaseDate={data.release_date}/>
+                        </Grid>
+                    )
+                )
+            )}
+        </Grid>
     )
   }

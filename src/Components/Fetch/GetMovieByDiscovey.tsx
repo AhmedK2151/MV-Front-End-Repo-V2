@@ -73,7 +73,7 @@ function GetMovieByDiscovery() {
   useEffect(() => {
     setFilter(params.page ?? 'popularity')
     setOrder(params.order ?? 'desc')
-    setPageNum(Number(params.page_num))
+    setPageNum(Number(params.page_num) ?? 1)
   }, [params, filter, order])
 
   useMemo(() => {
