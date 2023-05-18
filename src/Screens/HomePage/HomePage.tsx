@@ -9,7 +9,7 @@ export const SideContent = styled(Grid)<GridProps>(({theme}) => ({
   
 })) as typeof Grid
 
-function HomePage() {  
+function HomePage() {
 
   return(
     <Box
@@ -20,20 +20,19 @@ function HomePage() {
       <Grid
         container
         sx={{height: '100%', }}>
-        <SideContent item sm={2}/>
+        <SideContent item sm={2} />
 
         <Grid 
           item
-          xs={12}
           sm={8}
           sx={{
             marginInline: '4px',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}>
             <GetMovieByDiscovery/>
         </Grid>
 
-        <SideContent item sm={2} />
+        <SideContent item sm={2}/>
       </Grid>
     </Box>
   )

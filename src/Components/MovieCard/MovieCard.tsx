@@ -1,24 +1,19 @@
 import { BrokenImage } from "@mui/icons-material";
 import { 
-  Box,
   Card,
-  CardActionArea,
   CardContent,
-  CardHeader,
   CardMedia,
-  Paper,
-  PaperProps,
-  styled,
   Typography, 
+  styled, 
   useTheme} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const CardContainer = styled(Paper)<PaperProps>(({theme}) => ({
-  marginTop: 16,
-  // '& .MuiPaper-root:hover': {
-  //   backgroundColor: alpha(theme.highlight.highlight, 0.1)
-  // }
-})) as typeof Paper
+const CardContentLessPadding = styled(CardContent)(`
+  padding: 8px;
+  &:last-child {
+    padding-bottom: 0;
+  }
+`);
 
 type MovieCardProps = {
   title?: string,
@@ -39,6 +34,7 @@ function MovieCard(props: MovieCardProps) {
       <Card
         sx={{
           maxWidth: '150px',
+          height: '100%',
           marginBottom: '16px',
           borderWidth: '2px',
           borderStyle: 'solid',
@@ -63,18 +59,18 @@ function MovieCard(props: MovieCardProps) {
             <CardMedia
               src={`https://image.tmdb.org/t/p/original${posterPath}`}
               component='img'
+              loading='lazy'
+              placeholder="Loading"          
               sx={{
                 width: '150px',
                 height: '225px'
               }}/>
           : <BrokenImage style={{width: '150px', height: '225px'}}/>}
-            <CardContent
-              sx={{padding: '8px', marginBottom: '-8px'}}
-            >
+            <CardContentLessPadding>
               <Typography variant='body2'>
                 {title ?? 'N/A'}
               </Typography>
-            </CardContent>
+            </CardContentLessPadding>
       </Card>
 
   )

@@ -84,17 +84,19 @@ function GetMovieByTitle() {
               <ArrowForwardSharp />
             </Button>
           </div>
+
           <ShowMovie searchInfo={movie} />
-        { error && (
-          <Alert
-            color='error'
-            style={{
-              marginBlockStart: 16,
-            }}>
-            <AlertTitle>Error</AlertTitle>
-            Please Enter A Valid Movie Title
-          </Alert>
-        )}
+
+          { error && (
+            <Alert
+              color='error'
+              style={{
+                marginBlockStart: 16,
+              }}>
+              <AlertTitle>Error</AlertTitle>
+              Please Enter A Valid Movie Title
+            </Alert>
+          )}
         { movie && !loading &&
         <div 
           style={{

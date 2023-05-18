@@ -33,5 +33,17 @@
     "@vitejs/plugin-react-swc": "^3.0.0",
     "typescript": "^4.9.3",
     "vite": "^4.1.0"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AhmedK2151/MV-Front-End-Repo-V2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AhmedK2151/MV-Front-End-Repo-V2/issues"
+  },
+  "homepage": "https://github.com/AhmedK2151/MV-Front-End-Repo-V2#readme",
+  "description": ""
 }
