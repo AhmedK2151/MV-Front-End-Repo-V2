@@ -2,9 +2,55 @@ import { ArrowBackSharp, ArrowForwardSharp } from "@mui/icons-material"
 import { Alert, AlertTitle, Button, Typography } from "@mui/material"
 import { useEffect, useMemo, useState } from "react"
 import MovieCard from "../MovieCard/MovieCard"
-import { SingleMovie } from "./fetch"
+import { SearchInfo, SingleMovie } from "./fetch"
 import { useNavigate, useParams } from "react-router-dom"
 import { ShowMovie } from "./ShowMovie"
+import { Style } from "util"
+
+type PageSwitcher = {
+  totalPages: number
+  searchValue: string | undefined
+  pageNum: number
+  style?: Style
+}
+
+function PageSwitcher(props: PageSwitcher) {
+
+  const { totalPages, searchValue, pageNum } = props
+  const navigate = useNavigate()
+  return(
+    <div 
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: '16px',
+        paddingTop: '16px'
+      }}>
+      <Button
+        variant='contained'
+        onClick={() => {
+          navigate(`/search/${searchValue}/${pageNum === 1 ? 1 : pageNum - 1}`)
+        }}>
+        <ArrowBackSharp />
+      </Button>
+      <Typography 
+        variant="h5"
+        style={{
+          paddingInline: '12px'
+        }}>
+        {pageNum}/{totalPages}
+      </Typography>
+      <Button
+        variant='contained'
+        onClick={() => {
+          navigate(`/search/${searchValue}/${pageNum + 1}`)
+        }}>
+        <ArrowForwardSharp />
+      </Button>
+    </div>
+  )
+}
 
 var header = new Headers()
 header.append("Authorization", `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`)
@@ -14,7 +60,7 @@ function GetMovieByTitle() {
   const params = useParams()
   const navigate = useNavigate()
 
-  const [movie, setMovie] = useState<any>()
+  const [movie, setMovie] = useState<SearchInfo>()
   const [error, setError] = useState<boolean>()
   const [pageNum, setPageNum] = useState<number>(1)
   const [loading, setLoading] = useState<boolean>(true)
@@ -46,7 +92,7 @@ function GetMovieByTitle() {
   useEffect(() => {
       //console.log(movie)
       movie &&
-      movie.results < 1 &&
+      Number(movie.results) < 1 &&
       params.search_value && params.search_value.length > 2
       ? setError(true)
       : setError(false)
@@ -54,37 +100,21 @@ function GetMovieByTitle() {
 
     return(
       <div>
-          <div 
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Button
-              variant='contained'
-              onClick={() => {
-                //setPageNum(pageNum === 1 ? 1 : pageNum - 1)
-                navigate(`/search/${params.search_value}/${pageNum === 1 ? 1 : pageNum - 1}`)
-              }}>
-              <ArrowBackSharp />
-            </Button>
-            <Typography 
-              variant="h5"
-              style={{
-                paddingInline: '12px'
-              }}>
-              {pageNum}/{movie && movie.total_pages}
-            </Typography>
-            <Button
-              variant='contained'
-              onClick={() => {
-                //setPageNum(pageNum + 1)
-                navigate(`/search/${params.search_value}/${pageNum + 1}`)
-              }}>
-              <ArrowForwardSharp />
-            </Button>
+        
+        { movie &&
+          <div style={{marginTop: '-16px'}}>
+            <PageSwitcher
+              totalPages={movie.total_pages}
+              searchValue={params.search_value} 
+              pageNum={pageNum} 
+            />
           </div>
-          <ShowMovie searchInfo={movie} />
+        }
+
+        {movie &&
+          <ShowMovie searchInfo={movie!} />
+        }
+
         { error && (
           <Alert
             color='error'
@@ -95,38 +125,14 @@ function GetMovieByTitle() {
             Please Enter A Valid Movie Title
           </Alert>
         )}
-        { movie && !loading &&
-        <div 
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingTop: '16px',
-          }}>
-          <Button
-            variant='contained'
-            onClick={() => {
-              // setPageNum(pageNum === 1 ? 1 : pageNum - 1)
-              navigate(`/search/${params.search_value}/${pageNum === 1 ? 1 : pageNum - 1}`)
-            }}>
-            <ArrowBackSharp />
-          </Button>
-          <Typography 
-            variant="h5"
-            style={{
-              paddingInline: '12px'
-            }}>
-            {pageNum}/{movie && movie.total_pages}
-          </Typography>
-          <Button
-            variant='contained'
-            onClick={() => {
-              //setPageNum(pageNum + 1)
-              navigate(`/search/${params.search_value}/${pageNum + 1}`)
-            }}>
-            <ArrowForwardSharp />
-          </Button>
-        </div>}
+
+        { movie &&
+          <PageSwitcher
+            totalPages={movie.total_pages}
+            searchValue={params.search_value} 
+            pageNum={pageNum} 
+          />
+        }
       </div>
     )
 }

@@ -1,24 +1,13 @@
 import { BrokenImage } from "@mui/icons-material";
 import { 
-  Box,
   Card,
-  CardActionArea,
   CardContent,
-  CardHeader,
   CardMedia,
-  Paper,
-  PaperProps,
-  styled,
   Typography, 
+  styled, 
   useTheme} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-const CardContainer = styled(Paper)<PaperProps>(({theme}) => ({
-  marginTop: 16,
-  // '& .MuiPaper-root:hover': {
-  //   backgroundColor: alpha(theme.highlight.highlight, 0.1)
-  // }
-})) as typeof Paper
+import { CardContentLessPadding } from "../StyledComponents/CardContentLessPadding/CardContentLessPadding";
 
 type MovieCardProps = {
   title?: string,
@@ -27,10 +16,11 @@ type MovieCardProps = {
   id?: number,
   rating?: number,
   releaseDate?: string
+  backdropPath?: string | null
 }
 
 function MovieCard(props: MovieCardProps) {
-  const { title, overview, posterPath, id, rating, releaseDate } = props
+  const { title, overview, posterPath, id, rating, releaseDate, backdropPath } = props
 
   const navigate = useNavigate()
   const theme = useTheme()
@@ -39,6 +29,7 @@ function MovieCard(props: MovieCardProps) {
       <Card
         sx={{
           maxWidth: '150px',
+          height: '100%',
           marginBottom: '16px',
           borderWidth: '2px',
           borderStyle: 'solid',
@@ -57,24 +48,25 @@ function MovieCard(props: MovieCardProps) {
             poster_path: posterPath,
             vote_average: rating,
             release_date: releaseDate,
+            backdrop_path: backdropPath
           }})
         }>
           { posterPath ?
             <CardMedia
               src={`https://image.tmdb.org/t/p/original${posterPath}`}
               component='img'
+              loading='lazy'
+              placeholder="Loading"          
               sx={{
                 width: '150px',
                 height: '225px'
               }}/>
           : <BrokenImage style={{width: '150px', height: '225px'}}/>}
-            <CardContent
-              sx={{padding: '8px', marginBottom: '-8px'}}
-            >
+            <CardContentLessPadding>
               <Typography variant='body2'>
                 {title ?? 'N/A'}
               </Typography>
-            </CardContent>
+            </CardContentLessPadding>
       </Card>
 
   )
