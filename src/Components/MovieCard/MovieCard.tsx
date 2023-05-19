@@ -7,13 +7,7 @@ import {
   styled, 
   useTheme} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-const CardContentLessPadding = styled(CardContent)(`
-  padding: 8px;
-  &:last-child {
-    padding-bottom: 0;
-  }
-`);
+import { CardContentLessPadding } from "../StyledComponents/CardContentLessPadding/CardContentLessPadding";
 
 type MovieCardProps = {
   title?: string,
@@ -22,10 +16,11 @@ type MovieCardProps = {
   id?: number,
   rating?: number,
   releaseDate?: string
+  backdropPath?: string | null
 }
 
 function MovieCard(props: MovieCardProps) {
-  const { title, overview, posterPath, id, rating, releaseDate } = props
+  const { title, overview, posterPath, id, rating, releaseDate, backdropPath } = props
 
   const navigate = useNavigate()
   const theme = useTheme()
@@ -53,6 +48,7 @@ function MovieCard(props: MovieCardProps) {
             poster_path: posterPath,
             vote_average: rating,
             release_date: releaseDate,
+            backdrop_path: backdropPath
           }})
         }>
           { posterPath ?

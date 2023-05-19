@@ -1,5 +1,5 @@
 import { SearchSharp } from "@mui/icons-material";
-import { alpha, InputBase, Paper, styled } from "@mui/material";
+import { alpha, Button, IconButton, InputBase, Paper, styled } from "@mui/material";
 import React, { useContext } from "react";
 import { SearchContext } from "../../Providers/SearchProvider/SearchProvider";
 import { useNavigate } from "react-router-dom";
@@ -47,7 +47,15 @@ function Search(props: SearchProps) {
 
   return(
     <SearchWrapper>
-      <SearchSharp style={{color: 'grey'}} />
+      <IconButton
+        type="button"
+        onClick={(e) => {
+          if(searchContext.context.length > 0) {
+            naviagte(`/search/${searchContext.context}/1`)
+          }
+        }}>
+        <SearchSharp style={{color: 'grey'}} />
+      </IconButton>
       <StyledSearchField
         placeholder="Search"
         style={style}
@@ -55,7 +63,7 @@ function Search(props: SearchProps) {
           searchContext.setcontext(text.target.value.toLowerCase())
         }}
         onKeyDown={(e) => {
-          if(e.nativeEvent.key === 'Enter') {
+          if(e.nativeEvent.key === 'Enter' && searchContext.context.length > 0) {
             naviagte(`/search/${searchContext.context}/1`)
           }
         }}

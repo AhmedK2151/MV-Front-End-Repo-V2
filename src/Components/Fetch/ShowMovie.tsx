@@ -19,15 +19,15 @@ export function ShowMovie(props: ShowMovieProps) {
             { searchInfo && (
                 searchInfo.results.map(
                     (data: SingleMovie) => (
-                        <Grid item xs={'auto'}>
+                        <Grid key={data.id} item xs={'auto'}>
                             <MovieCard
                                 id={data.id}
                                 title={data.title}
-                                key={data.id}
                                 overview={data.overview}
                                 posterPath={data.poster_path}
                                 rating={data.vote_average}
-                                releaseDate={data.release_date}/>
+                                releaseDate={data.release_date}
+                                backdropPath={data.backdrop_path}/>
                         </Grid>
                     )
                 )
