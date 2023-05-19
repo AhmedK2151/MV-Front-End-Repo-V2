@@ -10,26 +10,7 @@ from = "/"
 to = "/home/popularity/desc/1"
 status = 302
 
-# Show a custom 404 for this path
 [[redirects]]
-from= "/home/*/*/*"
-to = "/"
-status = 404
-
-# Show a custom 404 for this path
-[[redirects]]
-from= "/movie/*"
-to = "/"
-status = 404
-
-# Show a custom 404 for this path
-[[redirects]]
-from= "/search/*/*"
-to = "/"
-status = 404
-
-# Rewrite a path
-[[redirects]]
-from = "/"
-to = "/home/popularity/desc/1"
-status = 200
+  from = "/*"
+  to = "/index.html"
+  status = 200
