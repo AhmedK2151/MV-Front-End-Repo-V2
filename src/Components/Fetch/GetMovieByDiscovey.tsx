@@ -26,11 +26,11 @@ function PageSwitcher(props: PageSwitcher) {
         justifyContent: 'center',
         alignItems: 'center',
         paddingBottom: '16px',
+        paddingTop: '16px'
       }}>
       <Button
         variant='contained'
         onClick={() => {
-          //setPageNum(pageNum === 1 ? 1 : pageNum - 1)
           navigate(`/home/${filter}/${order}/${pageNum === 1 ? 1 : pageNum - 1}`)
         }}>
         <ArrowBackSharp />
@@ -99,7 +99,7 @@ function GetMovieByDiscovery() {
 
     return(
       <div>
-        <div style={{paddingBottom: '16px'}}>
+        <div>
           <Accordion
             header={`Filter by 
             ${filter === 'popularity' ? 'Popularity' : ''}
@@ -160,24 +160,18 @@ function GetMovieByDiscovery() {
           pageNum={pageNum}
           searchInfo={movie}
         />
+
         <div style={{justifyContent: 'center'}}>
           <ShowMovie searchInfo={movie} />
         </div>
-        { movie && !loading &&
-          <div 
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingTop: '16px',
-            }}>
-            <PageSwitcher
-              order={order}
-              filter={filter}
-              pageNum={pageNum}
-              searchInfo={movie}
-            />
-          </div>
+
+      { movie && !loading &&
+        <PageSwitcher
+          order={order}
+          filter={filter}
+          pageNum={pageNum}
+          searchInfo={movie}
+        />
       }
       </div>
     )
