@@ -12,12 +12,11 @@ status = 302
 
 # Show a custom 404 for this path
 [[redirects]]
-from = "/*"
 to = "/"
 status = 404
 
 # Rewrite a path
 [[redirects]]
 from = "/"
-to = "//home/popularity/desc/1"
+to = "/home/popularity/desc/1"
 status = 200
